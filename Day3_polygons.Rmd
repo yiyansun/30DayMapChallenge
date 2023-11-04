@@ -1,0 +1,49 @@
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(ggOceanMaps)
+library(grfxtools)
+
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(sf)
+```
+
+```{r}
+basemap(limits = 30, bathymetry = TRUE)
+```
+
+```{r}
+basemap(limits = 30, bathymetry = TRUE)+
+  scale_fill_viridis_d("Water depth (m)")
+```
+
+```{r}
+wr <- map_data("world")
+head(wr)
+```
+
+
+```{r}
+ggplot() +
+    geom_map(aes(map_id = region), map = wr, data = wr,
+             color = "black", fill = "lightgray", size = 0.1
+    )+
+    expand_limits(x = wr$long, y = wr$lat)+
+    coord_map("ortho", orientation = c(-90, 0, 30))
+```
+
+```{r}
+ggpolar(pole = "N", max.lat = 90, min.lat = 55, n.lat.labels = 4)
+```
+
+```{r}
+mongolia <- ne_states(country = "Mongolia", returnclass = "sf")
+
+ggplot(data = mongolia) +
+  geom_sf() +
+  labs(title = "Map of Mongolia")
+```
+
+
